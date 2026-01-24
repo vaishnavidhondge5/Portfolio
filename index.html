@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaishnavi Dhondge | Portfolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Nude Color Palette */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            /* Hide the default cursor */
+            cursor: none !important;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FAF3E0;
+            color: #5D4037;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- CUSTOM CURSOR STYLE --- */
+        #eye-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            font-size: 24px;
+            pointer-events: none; /* Very important: allows clicking through the emoji */
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Scale up cursor on links */
+        .cursor-hover {
+            transform: translate(-50%, -50%) scale(1.5) !important;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes nameReveal {
+            0% { transform: translateY(50px); opacity: 0; filter: blur(10px); letter-spacing: 15px; }
+            100% { transform: translateY(0); opacity: 1; filter: blur(0); letter-spacing: 2px; }
+        }
+
+        /* --- INTERACTIVE EYE ANIMATION (CLICK) --- */
+        .eye-spawn {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            z-index: 9999;
+            animation: eyeFly 1s ease-out forwards;
+        }
+
+        @keyframes eyeFly {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
+        }
+
+        /* --- BIG NAME STYLE --- */
+        .animated-name {
+            display: inline-block;
+            color: #b3916f;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            animation: nameReveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            text-shadow: 4px 4px 0px rgba(226, 213, 184, 0.5);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #D1B0A8;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 1s ease-in-out 0.3s;
+        }
+
+        h2.active::after { width: 80px; }
+
+        /* Floating Resume Button */
+        .resume-floating {
+            position: fixed;
+            top: 85px; 
+            right: 20px;
+            z-index: 1100;
+            background-color: #5D4037;
+            color: #FAF3E0;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resume-floating:hover { background-color: #AD8B73; transform: translate(0, -2px) !important; }
+
+        /* Navigation */
+        nav {
+            background-color: #E6D5B8;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: bold; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: #5D4037; font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover { color: #D1B0A8; }
+
+        /* Sections */
+        #home {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ceb8a2;
+            box-shadow: 0 10px 25px rgba(23, 8, 8, 0.1);
+            animation: float 4s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #8D7B68;
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        .btn-container { display: flex; gap: 15px; }
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-mail { background-color: #D1B0A8; color: white; }
+        .btn-linkedin { border: 2px solid #D1B0A8; color: #5D4037; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        section { padding: 100px 10%; }
+
+        /* Contact Section */
+        #contact { background-color: #E6D5B8; }
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #FAF3E0;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #5D4037;
+            font-weight: 600;
+            padding: 15px;
+            border-radius: 12px;
+            background: #ffffff;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .contact-item:hover { transform: translateY(-3px); background: #fdfdfd; color: #AD8B73; }
+
+        footer { padding: 40px 20px; text-align: center; background: #FAF3E0; border-top: 1px solid #E6D5B8; }
+
+        @media (max-width: 768px) {
+            .animated-name { font-size: 2.8rem; }
+            nav ul { display: none; }
+            section { padding: 60px 5%; }
+            #eye-cursor { display: none; } /* Hide custom cursor on mobile */
+            * { cursor: auto !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor Element -->
+    <div id="eye-cursor">👀</div>
+
+    <!-- Floating Resume Button -->
+    <a href="chotu.pdf" target="_blank" class="resume-floating clickable">
+        📄 Resume
+    </a>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Vaishnavi ✨</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#technical-skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <img src="vish.jpeg" alt="Vaishnavi Dhondge" class="profile-img">
+        <h1>
+            <span class="animated-name">Vaishnavi Dhondge</span>
+        </h1>
+        <p class="subtitle">IT Engineering Student 🎓</p>
+        <p style="margin-top: -15px; margin-bottom: 30px; font-size: 1.1rem; color: #AD8B73; font-weight: 500;">
+            UI/UX & Frontend Lead @ ATHinnovations 💻
+        </p>
+        
+        <div class="btn-container">
+            <a href="mailto:vaishnavidhondge5@gmail.com" class="btn btn-mail clickable">Send Mail ✉️</a>
+            <a href="https://www.linkedin.com/in/vdhondge" target="_blank" class="btn btn-linkedin clickable">LinkedIn 🔗</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="reveal">👩‍💻 About Me</h2>
+        <div class="reveal" style="background: #F1E4D8; padding: 40px; border-radius: 15px; border-left: 5px solid #AD8B73; text-align: left;">
+            <p style="font-size: 1.1rem; color: #4A3F35; font-weight: 500; line-height: 1.8;">
+                Hello! I’m <strong style="color: #AD8B73;">Vaishnavi Dhondge</strong>, a <strong style="color: #AD8B73;">Third-Year IT Engineering student</strong> with a deep-rooted passion for technology and design. 
+                <br><br>
+                Currently, I serve as the <strong style="color: #AD8B73;">UI/UX and Frontend Lead at ATHinnovations</strong>, where I direct the creative and technical development of user-centric interfaces. 
+                I focus on bridging the gap between engineering logic and aesthetic excellence.
+                <br><br>
+                In addition to my technical roles, I am proud to be a <strong style="color: #AD8B73;">SPOC and Core Team Member of the college M-TEC Cell</strong>, where I contribute to fostering a culture of technical innovation and management excellence within our campus.
+            </p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="reveal">🚀 Projects</h2>
+        <div class="reveal" style="background: white; padding: 40px; border-radius: 15px; border-top: 5px solid #AD8B73; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #5D4037; margin-bottom: 15px;">Intelligent Shopping Cart System 🛒</h3>
+            <p style="font-size: 1.05rem; margin-bottom: 20px;">
+                An innovative IoT-based project designed to revolutionize the retail experience by reducing long queues and automating the billing process.
+            </p>
+            <ul style="list-style: none;">
+                <li style="background: #FDF6EC; border-left: 4px solid #D1B0A8; padding: 10px 15px; margin-bottom: 10px; font-weight: 600;">✔ Integrated RFID Technology for automatic item detection.</li>
+                <li style="background: #FDF6EC; border-left: 4px solid #D1B0A8; padding: 10px 15px; margin-bottom: 10px; font-weight: 600;">✔ Developed a Real-time LCD Display interface.</li>
+                <li style="background: #FDF6EC; border-left: 4px solid #D1B0A8; padding: 10px 15px; margin-bottom: 10px; font-weight: 600;">✔ Wireless data transmission to main billing servers.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="technical-skills" style="text-align: center;">
+        <h2 class="reveal">💡 Technical Skills</h2>
+        <div class="reveal" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px;">
+            <div style="font-weight: 900; font-size: 1rem; background: #E3D5CA; padding: 12px 25px; border: 2px solid #AD8B73; text-transform: uppercase; border-radius: 5px;">HTML</div>
+            <div style="font-weight: 900; font-size: 1rem; background: #E3D5CA; padding: 12px 25px; border: 2px solid #AD8B73; text-transform: uppercase; border-radius: 5px;">C++</div>
+            <div style="font-weight: 900; font-size: 1rem; background: #E3D5CA; padding: 12px 25px; border: 2px solid #AD8B73; text-transform: uppercase; border-radius: 5px;">Project Management</div>
+            <div style="font-weight: 900; font-size: 1rem; background: #E3D5CA; padding: 12px 25px; border: 2px solid #AD8B73; text-transform: uppercase; border-radius: 5px;">UI/UX Design</div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" style="padding-top: 0; text-align: center;">
+        <h2 class="reveal">🛠️ Tools</h2>
+        <div class="reveal" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px;">
+            <div style="font-weight: 900; font-size: 1rem; background: #AD8B73; color: white; padding: 12px 25px; text-transform: uppercase; border-radius: 5px;">Git</div>
+            <div style="font-weight: 900; font-size: 1rem; background: #AD8B73; color: white; padding: 12px 25px; text-transform: uppercase; border-radius: 5px;">GitHub</div>
+            <div style="font-weight: 900; font-size: 1rem; background: #AD8B73; color: white; padding: 12px 25px; text-transform: uppercase; border-radius: 5px;">VS Code</div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="CONTACT">
+        <h2 class="reveal">📫 Contact</h2>
+        <div class="reveal contact-container">
+            <p style="font-weight: 700; color: #5D4037; font-size: 1.2rem;">Let’s Connect! ✨</p>
+            <div class="contact-info-grid">
+                <a href="mailto:vaishnavidhondge5@gmail.com" class="contact-item clickable">📧 vaishnavidhondge5@gmail.com</a>
+                <a href="https://www.linkedin.com/in/vdhondge" target="_blank" class="contact-item clickable">🔗 LinkedIn: vdhondge</a>
+                <a href="https://github.com/vaishnavidhondge5" target="_blank" class="contact-item clickable">💻 GitHub: vaishnavidhondge5</a>
+                <a href="resume.pdf" target="_blank" class="contact-item clickable" style="background: #D1B0A8; color: white;">📄 Download My Resume (PDF)</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="subtitle">Third Year IT Engineering Student</p>
+        
+    </footer>
+
+    <script>
+        // --- CUSTOM CURSOR LOGIC ---
+        const cursor = document.getElementById('eye-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Add hover effect for all clickable elements
+        const clickables = document.querySelectorAll('a, button, .clickable, .contact-item');
+        clickables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // --- SCROLL REVEAL LOGIC ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // --- CLICK SPAWN LOGIC ---
+        document.addEventListener('click', function(e) {
+            const isClickable = e.target.closest('a, button, .btn, .contact-item');
+            
+            if (isClickable) {
+                const eye = document.createElement('div');
+                eye.className = 'eye-spawn';
+                eye.innerHTML = '👀';
+                eye.style.left = e.clientX + 'px';
+                eye.style.top = e.clientY + 'px';
+                document.body.appendChild(eye);
+
+                setTimeout(() => {
+                    eye.remove();
+                }, 1000);
+            }
+        });
+    </script>
+
+</body>
+</html>
